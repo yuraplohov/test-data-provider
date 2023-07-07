@@ -11,11 +11,12 @@ composer require yuraplohov/test-data-provider
 
 ## Usage
 
-The package contains one class - **Yuraplohov\TestDataProvider\Provider**. This class has three public methods:
+The package contains one class - **Yuraplohov\TestDataProvider\Provider**. This class has four public methods:
 
-1. **getPHPUnitCases(array $caseDirs): array** - retrieves an array of test cases in PHPUnit framework format.
-2. **getCodeceptionCases(array $caseDirs): array** - retrieves an array of test cases in Codeception framework format.
-3. **get(string $path): mixed** - retrieves data from a directory, file, or array element in a php-file.
+1. **basePath(string $basePath): self** - sets the base path to the directory with data.
+2. **getPHPUnitCases(array $caseDirs): array** - retrieves an array of test cases in PHPUnit framework format.
+3. **getCodeceptionCases(array $caseDirs): array** - retrieves an array of test cases in Codeception framework format.
+4. **get(string $path): mixed** - retrieves data from a directory, file, or array element in a php-file.
 
 Php files with data for all these methods should be like this:
 
@@ -43,8 +44,8 @@ The 'tests' directory structure for **getPHPUnitCases()** and **getCodeceptionCa
         * input.json                                               
         * expected.php
 
-The **'data'** directory must be at the same level as your test class. Directories with cases are placed in the **'data'** directory. 
-You can name case directories whatever you want, but the **'data'** directory must always be named like this.
+If the base path is not specified, the **'data'** directory must be at the same level as your test class. Directories with cases are placed in the **'data'** directory. 
+You can name case directories whatever you want, but the **'data'** directory must always be named like this if you don't specify any base path with **basePath()**.
 
 ### Provider::getPHPUnitCases(array $caseDirs): array
 
