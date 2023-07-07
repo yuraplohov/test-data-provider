@@ -4,9 +4,27 @@ namespace Yuraplohov\TestDataProvider;
 
 class Provider
 {
+    private ?string $basePath = null;
+
+    /**
+     * @param string $basePath
+     * The base path to the directory with data
+     * @return self
+     */
+    public function basePath(string $basePath): self
+    {
+        if (!str_ends_with($basePath, DIRECTORY_SEPARATOR)) {
+            $basePath .= DIRECTORY_SEPARATOR;
+        }
+
+        $this->basePath = $basePath;
+
+        return $this;
+    }
+
     /**
      * @param string $path (Examples: 'Service', 'Service/request', 'Service/request.input')
-     * The path must be in the subdirectory 'data', that must be at the same level as your test.
+     * If the base path is not specified, the path must be in the subdirectory 'data', that must be at the same level as your test.
      * The path can be the name of a directory, file (php or any text file: xml, json, txt ...) or element in php array
      * @return mixed
      * A content of the specific file or php array element will be returned
@@ -50,7 +68,7 @@ class Provider
 
     /**
      * @param array $caseDirs (Example: ['FirstCase', 'SecondCase'])
-     * Case directories must be in the subdirectory 'data', that must be at the same level as your test
+     * If the base path is not specified, case directories must be in the subdirectory 'data', that must be at the same level as your test
      * @return array
      * An array of the contents of all files in specific directories will be returned.
      * The array structure fits the Codeception framework
@@ -64,7 +82,7 @@ class Provider
 
     /**
      * @param array $caseDirs (Example: ['FirstCase', 'SecondCase'])
-     * Case directories must be in the subdirectory 'data', that must be at the same level as your test
+     * If the base path is not specified, case directories must be in the subdirectory 'data', that must be at the same level as your test
      * @return array
      * An array of the contents of all files in specific directories will be returned.
      * The array structure fits the PHPUnit framework
@@ -84,6 +102,10 @@ class Provider
 
     private function getDataPath(string $testFilePath)
     {
+        if (isset($this->basePath)) {
+            return $this->basePath;
+        }
+
         return substr($testFilePath, 0, strrpos($testFilePath, DIRECTORY_SEPARATOR)) . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR;
     }
 

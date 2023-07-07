@@ -149,4 +149,16 @@ Hello World', $result);
 
         $result = $sut->get('some_file');
     }
+
+    /** @test */
+    public function it_gets_data_with_base_path()
+    {
+        $sut = new Provider();
+
+        $result = $sut->basePath(__DIR__ . DIRECTORY_SEPARATOR . 'files/')->get('file1');
+
+        $this->assertEquals([
+            'var1' => 'value1',
+        ], $result);
+    }
 }
