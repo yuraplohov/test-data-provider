@@ -161,4 +161,18 @@ Hello World', $result);
             'var1' => 'value1',
         ], $result);
     }
+
+    /** @test */
+    public function it_gets_file_from_subdir()
+    {
+        $sut = new Provider();
+
+        $result = $sut->get('dir2/file');
+
+        $this->assertEquals('{
+  "name":"Юрий",
+  "age":30,
+  "car":null
+}', $result);
+    }
 }

@@ -115,6 +115,8 @@ class Provider
 
         $dirPath = substr($dataPath . $path, 0, $pos);
 
+        $fileName = str_contains($path, DIRECTORY_SEPARATOR) ? substr(strrchr($path, DIRECTORY_SEPARATOR), 1) : $path;
+
         $files = scandir($dirPath);
 
         foreach ($files as $file) {
@@ -125,7 +127,7 @@ class Provider
 
                 list($key, $ext) = explode('.', $file);
 
-                if ($key === $path) {
+                if ($key === $fileName) {
                     return $this->getFileContent($filePath, $ext);
                 }
             }
